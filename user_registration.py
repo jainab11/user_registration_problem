@@ -61,12 +61,47 @@ class UserRegistration:
                 
             else:
                 self.logger.error("First letter needs to be capital and name should be more that three characters %s",last_name)        
+    def email_input(self):
+        """
+        Description: 
+            Validates an email address using a regular expression.
+        Returns:
+            True if the email address is valid, False otherwise.
+        """
+    # ^[a-zA-Z0-9]+: The email starts with one or more alphanumeric characters.
+    # (\.[a-zA-Z0-9]+)*: Optionally followed by a dot and more alphanumeric characters, zero or more times.
+    # @: Followed by the @ symbol.
+    # [a-zA-Z0-9]+: Followed by one or more alphanumeric characters.
+    # (\.[a-zA-Z]{2,}){1,2}$: Followed by a dot and two or more letters, one or two times.
+
+        '''  E.g. abc.xyz@bl.co.in - Email has 3 mandatory parts (abc, bl 
+& co) and 2 optional (xyz & in) with 
+precise @ and . positions
+'''
+        pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,}){1,2}$'
+        
+
+        while True:
+            email_id = input("Enter your email id : ")
+            if re.match(pattern,email_id):
+                self.logger.info("Your Email id is : %s",email_id)
+                return True
+                
+            else:
+                print("eg. example@example.com")
+                print("Email should contain dot(.) and(@)ex.com ")
+                self.logger.error("Invalid Email id %s " ,email_id)
+            
+
+            
+
 def main():
     # logger
     logging.basicConfig( filename= 'user.log',level=logging.INFO)
     user_registration = UserRegistration()
     user_registration.first_name_input()
     user_registration.last_name_input()
+    user_registration.email_input()
     
     
 if __name__ == "__main__":
