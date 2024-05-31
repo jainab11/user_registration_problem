@@ -141,8 +141,7 @@ precise @ and . positions
             else:
                 print("Enter a strong password ")
                 self.logger.error("Invalid password ")
-                
-                          
+                                
 def main():
     
     # logger
