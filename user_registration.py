@@ -20,6 +20,7 @@ class UserRegistration:
         self.first_name = None
         self.last_name = None
         self.phone_number = None
+        self.password = None
         self.logger = logging.getLogger(__name__) #loger instance
         
     def first_name_input(self):
@@ -41,6 +42,7 @@ class UserRegistration:
                 
             else:
                 self.logger.error("First letter needs to be capital and name should be more that three characters %s",first_name)
+    
     def last_name_input(self):
         """
             Description: 
@@ -61,6 +63,7 @@ class UserRegistration:
                 
             else:
                 self.logger.error("First letter needs to be capital and name should be more that three characters %s",last_name)        
+    
     def email_input(self):
         """
         Description: 
@@ -93,6 +96,15 @@ precise @ and . positions
                 self.logger.error("Invalid Email id %s " ,email_id)
             
     def phone_input(self):
+        """
+         Description: 
+                This function is use for the user to input their valid phone number with contry code and 10 digit phone number.
+            Parameter:
+                self instance of class
+            Return:
+                If phone number is not valid throws an error
+      
+        """
         regex_ex = r'^\+\d{1,3} \d{10}$'
         while True:
             while True:
@@ -106,14 +118,41 @@ precise @ and . positions
                     self.logger.error("Invalid phone number entered: %s", phone_number)
                     print("contry code speprated by space ")
                     print("Please enter a valid phone number with country code and 10 digits.")
+    
+    def password_input(self):
+        """
+         Description: 
+                This function is use for the user to input their password with 
+                Rule1 minimum 8 Characters.
+            Parameter:
+                self instance of class
+            Return: 
+                Throws an error if not valid
+      
+        """
+        pass_reg_ex = r'^.{8,}$'
+        while True:
+            password = input("Enter password ") 
+            if re.match(pass_reg_ex,password):
+                self.password = password
+                self.logger.info("Your password is  : %s ",password)
+                print("valid password")
+                break
+            else:
+                print("Enter a strong password ")
+                self.logger.error("Invalid password ")
+                
+                          
 def main():
+    
     # logger
     logging.basicConfig( filename= 'user.log',level=logging.INFO)
     user_registration = UserRegistration()
     # user_registration.first_name_input()
     # user_registration.last_name_input()
     # user_registration.email_input()
-    user_registration.phone_input()
+    # user_registration.phone_input()
+    user_registration.password_input()
     
     
 if __name__ == "__main__":
