@@ -19,6 +19,7 @@ class UserRegistration:
     def __init__(self):
         self.first_name = None
         self.last_name = None
+        self.phone_number = None
         self.logger = logging.getLogger(__name__) #loger instance
         
     def first_name_input(self):
@@ -30,7 +31,6 @@ class UserRegistration:
             Return:
                 None
         """
-        
         while True:
             first_name = input("Enter your first name : ")
             if re.match("^[A-Z][a-z].{2,}$",first_name):
@@ -92,16 +92,28 @@ precise @ and . positions
                 print("Email should contain dot(.) and(@)ex.com ")
                 self.logger.error("Invalid Email id %s " ,email_id)
             
-
-            
-
+    def phone_input(self):
+        regex_ex = r'^\+\d{1,3} \d{10}$'
+        while True:
+            while True:
+                phone_number = input("Enter your phone number (e.g., 91 9919819801): ")
+                if re.match(regex_ex, phone_number):
+                    self.phone_number = phone_number
+                    self.logger.info("Your phone number is: %s", phone_number)
+                    print("Valid phone number.")
+                    break
+                else:
+                    self.logger.error("Invalid phone number entered: %s", phone_number)
+                    print("contry code speprated by space ")
+                    print("Please enter a valid phone number with country code and 10 digits.")
 def main():
     # logger
     logging.basicConfig( filename= 'user.log',level=logging.INFO)
     user_registration = UserRegistration()
-    user_registration.first_name_input()
-    user_registration.last_name_input()
-    user_registration.email_input()
+    # user_registration.first_name_input()
+    # user_registration.last_name_input()
+    # user_registration.email_input()
+    user_registration.phone_input()
     
     
 if __name__ == "__main__":
