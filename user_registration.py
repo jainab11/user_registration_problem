@@ -7,6 +7,15 @@ class UserRegistration:
         self.logger = logging.getLogger(__name__) #loger instance
         
     def first_name_input(self):
+        """
+            Description: 
+                This function is use for the user to input their first name and validates it.
+            Parameter:
+                self instance of class
+            Return:
+                None
+        """
+        
         while True:
             first_name = input("Enter your first name : ")
             if re.match("^[A-Z][a-z].{2,}$",first_name):
