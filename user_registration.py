@@ -124,15 +124,16 @@ precise @ and . positions
          Description: 
                 This function is use for the user to input their password with 
                 Rule1 minimum 8 Characters.
+                Rule2 Should have at least 1 Upper Case 
             Parameter:
                 self instance of class
             Return: 
                 Throws an error if not valid
       
         """
-        pass_reg_ex = r'^.{8,}$'
+        pass_reg_ex = r'^(?=.*[A-Z]).{8,}$'
         while True:
-            password = input("Enter password ") 
+            password = input("Enter password : ") 
             if re.match(pass_reg_ex,password):
                 self.password = password
                 self.logger.info("Your password is  : %s ",password)
