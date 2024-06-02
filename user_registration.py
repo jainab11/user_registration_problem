@@ -131,17 +131,27 @@ precise @ and . positions
                 Throws an error if not valid
       
         """
-        pass_reg_ex = r'^(?=.*[A-Z]).{8,}$'
+        # pass_reg_ex = r'^(?=.*[A-Z]).{8,}$'
         while True:
-            password = input("Enter password : ") 
-            if re.match(pass_reg_ex,password):
-                self.password = password
-                self.logger.info("Your password is  : %s ",password)
-                print("valid password")
-                break
-            else:
-                print("Enter a strong password ")
+            password = input("Enter password : ")
+            #  Rule :- minimum 8 char
+            if len(password)<8:
                 self.logger.error("Invalid password ")
+                return False,print(" Password needs to be 8 char or more ")
+            
+            # Rule :- have at least one upper case
+            if not re.match(r'[A-Z]',password):
+                self.logger.error("Needs to have at least one upper case")
+                return False, print(" Password needs at least on upper case ")
+
+            # Rule :- At least 1 numeric digit
+            if not re.match(r'\d',password):
+                self.logger.error("Needs to have at least one numeric digit")
+                return False, print(" Password needs at least one numeric digit  ")
+            break
+            
+            #  Rule:- 4 one special charater
+                
                                 
 def main():
     
