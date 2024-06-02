@@ -137,21 +137,32 @@ precise @ and . positions
             #  Rule :- minimum 8 char
             if len(password)<8:
                 self.logger.error("Invalid password ")
-                return False,print(" Password needs to be 8 char or more ")
+                print(" Password needs to be 8 char or more ")
+                continue
             
             # Rule :- have at least one upper case
             if not re.match(r'[A-Z]',password):
                 self.logger.error("Needs to have at least one upper case")
-                return False, print(" Password needs at least on upper case ")
-
+                print(" Password needs at least on upper case ")
+                continue
+            
             # Rule :- At least 1 numeric digit
             if not re.match(r'\d',password):
                 self.logger.error("Needs to have at least one numeric digit")
-                return False, print(" Password needs at least one numeric digit  ")
-            break
+                print(" Password needs at least one numeric digit  ")
+                continue
             
             #  Rule:- 4 one special charater
-                
+            special_char = re.findall(r'[^a-zA-Z0-9]',password)
+            if len(special_char) !=1:
+                self.logger.error("Invalid password: Password must contain exactly one special character")
+                print("Password must contain exactly one special character.")
+                continue
+            
+            self.password = password
+            self.logger.info("valid passwor")
+            print("password is valid")
+            break
                                 
 def main():
     
