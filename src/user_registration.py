@@ -34,7 +34,7 @@ class UserRegistration:
         else:
             self.logger.error("First letter needs to be capital and name should be more than three characters: %s", first_name)
             return False
-    def last_name_input(self):
+    def last_name_input(self,last_name):
         """
             Description: 
                 This function is use for the user to input their last name and validates it.
@@ -45,17 +45,18 @@ class UserRegistration:
         """
 
         while True:
-            last_name = input("Enter your last name : ")
+            # last_name = input("Enter your last name : ")
             if re.match("^[A-Z][a-z].{2,}$",last_name):
                 self.last_name = last_name
                 self.logger.info({last_name})
                 self.logger.info("Your first name is : %s",last_name)
-                break
+                return True
 
             else:
                 self.logger.error("First letter needs to be capital and name should be more that three characters %s",last_name)        
-
-    def email_input(self):
+                return False
+            
+    def email_input(self,email_id):
         """
         Description: 
             Validates an email address using a regular expression.
@@ -72,12 +73,13 @@ class UserRegistration:
 & co) and 2 optional (xyz & in) with 
 precise @ and . positions
 '''
-        pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,}){1,2}$'
+        # pattern = r'^(?!.*\.\.)(?!.*\.$)(?!^\.)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        p2 = r'^(?!.*\.\.)(?!.*\.$)(?!.*\.\@)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$'
 
 
         while True:
-            email_id = input("Enter your email id : ")
-            if re.match(pattern,email_id):
+            # email_id = input("Enter your email id : ")
+            if re.match(p2,email_id):
                 self.logger.info("Your Email id is : %s",email_id)
                 return True
 
@@ -85,8 +87,9 @@ precise @ and . positions
                 print("eg. example@example.com")
                 print("Email should contain dot(.) and(@)ex.com ")
                 self.logger.error("Invalid Email id %s " ,email_id)
+                return False
 
-    def phone_input(self):
+    def phone_input(self,phone_number):
         """
          Description: 
                 This function is use for the user to input their valid phone number with contry code and 10 digit phone number.
@@ -96,48 +99,56 @@ precise @ and . positions
                 If phone number is not valid throws an error
       
         """
-        regex_ex = r'^\+\d{1,3} \d{10}$'
+        regex_ex = r'^\+\d{1,3} [6-9]\d{9}$$'
     
         while True:
-            phone_number = input("Enter your phone number (e.g., 91 9919819801): ")
+            # phone_number = input("Enter your phone number (e.g., +91 9919819801): ")
             if re.match(regex_ex, phone_number):
                 self.phone_number = phone_number
                 self.logger.info("Your phone number is: %s", phone_number)
                 print("Valid phone number.")
-                break
+                return True
             else:
                 self.logger.error("Invalid phone number entered: %s", phone_number)
                 print("Country code separated by space.")
                 print("Please enter a valid phone number with country code and 10 digits.")
-
-    def password_input(self):
+                return False
+            
+    def password_input(self,password):
         while True:
-            password = input("Enter password : ")
+            p1 = r'^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$'
+
+            # password = input("Enter password : ")
             if len(password) < 8:
                 self.logger.error("Invalid password ")
                 print(" Password needs to be 8 char or more ")
-                continue
+                return False
 
             if not re.search(r'[A-Z]', password):
                 self.logger.error("Needs to have at least one upper case")
                 print(" Password needs at least one upper case ")
-                continue
+                return False
 
             if not re.search(r'\d', password):
                 self.logger.error("Needs to have at least one numeric digit")
                 print(" Password needs at least one numeric digit  ")
-                continue
+                return False
+            if not re.search(p1,password):
+                return False
+            if not re.search(r'^(?=.{9,14}$).*$',password):
+                return False
 
             special_char = re.findall(r'[^a-zA-Z0-9]', password)
             if len(special_char) != 1:
                 self.logger.error("Invalid password: Password must contain exactly one special character")
                 print("Password must contain exactly one special character.")
-                continue
+                return False
 
             self.password = password
             self.logger.info("valid password")
             print("Password is valid")
-            break
+            return True
+        
 
 def main():
 
